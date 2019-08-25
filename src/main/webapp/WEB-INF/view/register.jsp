@@ -41,7 +41,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
                     </div>
-                    <input name="password1" class="form-control" placeholder="*****" type="password">
+                    <input name="password" class="form-control" placeholder="*****" type="password">
                 </div>
             </div>
             <div class="form-group">
@@ -49,7 +49,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
                     </div>
-                    <input name="password2" class="form-control" placeholder="*****" type="password">
+                    <input name="passwordRepeated" class="form-control" placeholder="*****" type="password">
                 </div>
             </div>
             <div class="form-group">
