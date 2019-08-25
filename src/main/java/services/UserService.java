@@ -16,6 +16,7 @@ public class UserService {
     }
 
     public UserService() {
+        userDAO = new UserDAO();
 
     }
 
