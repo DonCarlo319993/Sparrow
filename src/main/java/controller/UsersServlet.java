@@ -1,16 +1,22 @@
 package controller;
 
 
+import static controller.HomeServlet.LOGIN;
+
 import dao.UserDAO;
 import java.io.IOException;
+import java.util.List;
+import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.User;
 
 @WebServlet(name = "usersServlet", urlPatterns = {"/users"})
 public class UsersServlet extends HttpServlet {
+
 
     private UserDAO userDao = new UserDAO();
 
@@ -22,10 +28,11 @@ public class UsersServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        Set<String> followedUsers = userDao.getFollowedUsers((String) request.getSession().getAttribute("username"));
-//        Set<String> notFollowedUsers = userDao.getNotFollowedUsers((String) request.getSession().getAttribute("username"));
-//        request.setAttribute("followedUsers", followedUsers);
-//        request.setAttribute("notFollowedUsers", notFollowedUsers);
+        String currentUserLogin = (String) request.getSession().getAttribute(LOGIN);
+        List<User> followedUsers = userDao.getFollowedUsers(currentUserLogin);
+        List<User> notFollowedUsers = userDao.getNotFollowedUsers(currentUserLogin);
+        request.setAttribute("followedUsers", followedUsers);
+        request.setAttribute("notFollowedUsers", notFollowedUsers);
 
         request.getRequestDispatcher("/users.jsp").forward(request, response);
     }
