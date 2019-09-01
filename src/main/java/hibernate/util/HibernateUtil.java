@@ -9,6 +9,7 @@ import javax.persistence.Persistence;
 
 public class HibernateUtil {
     private static HibernateUtil instance;
+
     private final EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("myDatabase");
     private final EntityManager entityManager = entityManagerFactory.createEntityManager();
 
@@ -18,7 +19,6 @@ public class HibernateUtil {
         }
         return instance;
     }
-    //nic co nie jest statyczne, nie może być w metodzie statycznej
 
     public void saveByHibernateSession(Object t) {
         Session session = entityManager.unwrap(Session.class);
@@ -35,17 +35,16 @@ public class HibernateUtil {
             entityManager.flush();
         }
         entityManager.getTransaction().commit();
-
     }
 
-    public void delete(Class clazz, Long objectId){
-        entityManager.getTransaction().begin();
-        Object toRemove = entityManager.find(clazz, objectId);
-        entityManager.remove(toRemove);
-        entityManager.getTransaction().commit();
+    public void delete( Class clazz, Long objectId) {
+      entityManager.getTransaction().begin();
+      Object toRemove = entityManager.find(clazz, objectId);
+      entityManager.remove(toRemove);
+      entityManager.getTransaction().commit();
     }
 
-    public EntityManager getEntityManager() {
-        return entityManager;
-    }
+  public EntityManager getEntityManager() {
+    return entityManager;
+  }
 }

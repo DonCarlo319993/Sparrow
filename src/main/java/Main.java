@@ -1,51 +1,56 @@
-import dao.TweetDAO;
 import dao.UserDAO;
-import java.util.Date;
 import java.util.List;
-import model.Tweet;
+import java.util.Set;
 import model.User;
 
-public class main {
+public class Main {
 
   public static void main(String[] args) {
-    User user = new User();
-    user.setLogin("Gabryska2");
-    user.setLastName("simsowa");
-    user.setName("dasd");
-    user.setDateOfRegistration(new Date());
-    user.setPassword("dd");
-
-    User user2 = new User();
-    user2.setLogin("Gabriella");
-    user2.setLastName("simsowa22");
-    user2.setName("dasd2");
-    user2.setDateOfRegistration(new Date());
-    user2.setPassword("dd");
-
-
-
-    user.getFollows().add(user2);
-
     UserDAO userDAO = new UserDAO();
 
-    userDAO.createUser(user);
-    userDAO.createUser(user2);
+    User cat = new User();
+    cat.setName("Coco");
+    cat.setLogin("cat2019");
+    cat.setPassword("dog");
 
-    Tweet tweet = new Tweet();
-    tweet.setMessage("sdasdasdas");
-    tweet.setAuthor(user2);
-    TweetDAO tweetDAO = new TweetDAO();
+    userDAO.saveUser(cat);
 
-    tweetDAO.addTweet(user2.getLogin(), "asdasdasd");
+    User mouse = new User();
+    mouse.setName("Stew");
+    mouse.setLogin("mouse2019");
+    mouse.setPassword("mom");
 
-    List<Tweet> followedTweets = tweetDAO.getFollowedTweets(user.getLogin());
+    userDAO.saveUser(mouse);
 
-    for(Tweet t : followedTweets){
-      System.out.println(t.getAuthor() + " " + t.getMessage() + " " + t.getPublishedAt());
-    }
+    User dog = new User();
+    dog.setName("BoKo");
+    dog.setLogin("dog2019");
+    dog.setPassword("cat");
 
+    userDAO.saveUser(dog);
+
+    List<User> followedUsers = userDAO.getFollowedUsers(dog.getLogin());
+    followedUsers.stream().forEach(user -> System.out.println(user));
+
+    List<User> notFollowedUsers = userDAO.getNotFollowedUsers(dog.getLogin());
+    notFollowedUsers.stream().forEach(user -> System.out.println(user));
+
+    Set<User> followed = userDAO.getUserByLogin(cat.getLogin()).getFollowed();
+    followed.stream().forEach(f -> System.out.println(f));
+    User coco = userDAO.getUserByLogin("cat2019");
+    coco.setName("Kokos");
+    userDAO.saveUser(coco);
+
+    userDAO.follow(coco.getLogin(), dog.getLogin());
+
+    System.out.println("_------------------------------------------------");
+
+    List<User> followedUsers1 = userDAO.getFollowedUsers(coco.getLogin());
+    followedUsers1.stream().forEach(u -> System.out.println(u));
+
+
+    userDAO.stopFollowing(coco.getLogin(), dog.getLogin());
 
   }
-
 
 }
